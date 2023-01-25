@@ -1,5 +1,11 @@
 const gameboardFactory = (dim=10) => {
-  const board = new Array(dim).fill(new Array(dim).fill('D'));
+  const row = new Array(dim).fill('D');
+  let board = new Array();
+  for (let i = 0; i < dim; i++) board.push(Array.from(row));
+
+  const length = () => {
+    return board.length;
+  }
 
   const accessBoard = (x, y) => {
     return board[x][y];
@@ -28,6 +34,8 @@ const gameboardFactory = (dim=10) => {
   }
 
   return {
+    board,
+    length,
     accessBoard,
     placeShip,
     receiveAttack,

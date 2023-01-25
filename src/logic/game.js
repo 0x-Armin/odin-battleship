@@ -1,15 +1,15 @@
 import { playerFactory } from "./player";
 
 const game = (() => {
-  const player1 = playerFactory();
-  const player2 = playerFactory();
+  const players = [playerFactory(), playerFactory()];
 
   const initGame = () => {
-    player1.populateBoard();
-    player2.populateBoard();
+    players[0].populateBoard();
+    players[1].populateBoard();
   };
 
   return {
+    players,
     initGame,
   };
 })();

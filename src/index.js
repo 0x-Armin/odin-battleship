@@ -1,3 +1,6 @@
 import { initFrontend } from "./dom/initFrontend";
+import { game } from "./logic/game";
 
-initFrontend();
+game.initGame();
+
+initFrontend(game.players[0].getGameBoard());
