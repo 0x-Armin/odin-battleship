@@ -1,5 +1,5 @@
 const gameboardFactory = (dim=10) => {
-  const row = new Array(dim).fill('D');
+  const row = new Array(dim).fill('');
   let board = new Array();
   for (let i = 0; i < dim; i++) board.push(Array.from(row));
 
@@ -16,7 +16,7 @@ const gameboardFactory = (dim=10) => {
   }
 
   const receiveAttack = (x, y) => {
-    if (board[x][y] === 'D') {
+    if (board[x][y] === '') {
       board[x][y] = 'M';
       return 'M';
     } else if (board[x][y] === 'H') {
