@@ -71,7 +71,7 @@ const createOceanGrid = (grid) => {
 const initFrontend = (oceanGrid, targetGrid) => {
   createDivStructure();
   createTargetGrid(targetGrid);
-  createOceanGrid(targetGrid);
+  createOceanGrid(oceanGrid);
 };
 
 export { initFrontend };
