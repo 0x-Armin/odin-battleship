@@ -40,6 +40,26 @@ const createTargetGrid = (grid) => {
     for (let j=0; j < grid.length(); j++) {
       let square = document.createElement('div');
       square.classList.add('square');
+      const gridElement = grid.accessBoard(i, j);
+      square.innerText = typeof gridElement === 'number' ? '' : gridElement;
+
+      row.appendChild(square);
+    }
+    container.appendChild(row);
+  }
+};
+
+const createOceanGrid = (grid) => {
+  const container = document.querySelector(".ocean-grid");
+  clearGrid(container);
+
+  for (let i=0; i < grid.length(); i++) {
+    let row = document.createElement('div');
+    row.classList.add('row');
+
+    for (let j=0; j < grid.length(); j++) {
+      let square = document.createElement('div');
+      square.classList.add('square');
       square.innerText = grid.accessBoard(i, j);
 
       row.appendChild(square);
@@ -48,9 +68,10 @@ const createTargetGrid = (grid) => {
   }
 };
 
-const initFrontend = (targetGrid) => {
+const initFrontend = (oceanGrid, targetGrid) => {
   createDivStructure();
   createTargetGrid(targetGrid);
+  createOceanGrid(targetGrid);
 };
 
 export { initFrontend };

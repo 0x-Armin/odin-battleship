@@ -3,4 +3,9 @@ import { game } from "./logic/game";
 
 game.initGame();
 
-initFrontend(game.players[0].getGameBoard());
+let currPlayer = game.getCurrPlayer();
+let opponent = 1 - currPlayer;
+
+let oceanGrid = game.players[currPlayer].getGameBoard();
+let targetGrid = game.players[opponent].getGameBoard();
+initFrontend(oceanGrid, targetGrid);
