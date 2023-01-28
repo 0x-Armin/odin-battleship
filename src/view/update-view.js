@@ -23,10 +23,17 @@ const makeNextTurnBtnClickable = () => {
   nextTurnBtn.removeAttribute("disabled");
   nextTurnBtn.addEventListener("click", () => {
     handleNextTurn();
+    makeNextTurnBtnUnclickable();
     updateDOMAfterNextTurn();
-    addTargetGridEL();
+    setTimeout(addTargetGridEL, 5000);
   });
 };
+
+const makeNextTurnBtnUnclickable = () => {
+  const nextTurnBtn = document.getElementById("next-turn-btn");
+  nextTurnBtn.classList.add('not-ready');
+  nextTurnBtn.disabled = 'disabled';
+}
 
 const updateDOMAfterAttack = (outcome) => {
   if (outcome === "M" || typeof outcome === "number") {
