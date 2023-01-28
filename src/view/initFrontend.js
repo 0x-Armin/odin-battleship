@@ -40,7 +40,7 @@ const createTargetGrid = (grid) => {
 
     for (let j = 0; j < grid.length(); j++) {
       let square = document.createElement("div");
-      square.classList.add("square");
+      square.classList.add("target-square");
       const gridElement = grid.accessBoard(i, j);
       square.innerText = typeof gridElement === "number" ? "" : gridElement;
       square.index = i * 10 + j;
@@ -61,7 +61,7 @@ const createOceanGrid = (grid) => {
 
     for (let j = 0; j < grid.length(); j++) {
       let square = document.createElement("div");
-      square.classList.add("square");
+      square.classList.add("ocean-square");
       square.innerText = grid.accessBoard(i, j);
 
       row.appendChild(square);

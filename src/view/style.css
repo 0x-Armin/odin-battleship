@@ -1,6 +1,6 @@
 #main-screen {
   display: grid;
-  grid-template-rows: 1fr 400px 400px;
+  grid-template-rows: 1fr 400px 300px;
 }
 
 .target-grid {
@@ -14,7 +14,7 @@
   display: flex;
 }
 
-.square {
+.target-square {
   width: 35px;
   height: 35px;
 
@@ -24,4 +24,16 @@
   border-style: solid;
   border-color: black;
   border-width: 0.5px;
+}
+
+.ocean-square {
+  width: 25px;
+  height: 25px;
+
+  margin-top: 0.5px;
+  margin-left: 0.5px;
+
+  border-style: solid;
+  border-color: black;
+  border-width: 0.5px; 
 }
