@@ -1,9 +1,11 @@
 import { handleAttackCell } from "../controller/handle-attack";
 
 const addTargetGridEL = () => {
-  const targetGridCells = document.querySelectorAll(".target-grid .square");
+  const targetGridCells = document.querySelectorAll(
+    ".target-grid .target-square"
+  );
   targetGridCells.forEach((cell) =>
-    cell.addEventListener("click", (event) => handleAttackCell(event))
+    cell.addEventListener("click", handleAttackCell)
   );
 };
 

@@ -1,6 +1,6 @@
 #main-screen {
   display: grid;
-  grid-template-rows: 1fr 400px 300px;
+  grid-template-rows: 1fr 1fr 400px 300px;
 }
 
 .target-grid {
@@ -36,4 +36,9 @@
   border-style: solid;
   border-color: black;
   border-width: 0.5px; 
+}
+
+.not-ready {
+  opacity: 0.33;
+  filter: alpha(opacity=33);
 }

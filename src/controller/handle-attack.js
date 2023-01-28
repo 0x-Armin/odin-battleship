@@ -22,7 +22,7 @@ const passHitToShip = (outcome) => {
 
 const handleAttackCell = (event) => {
   const cellIdx = event.srcElement.index;
-  [row, col] = getRowAndCol(cellIdx);
+  const [row, col] = getRowAndCol(cellIdx);
   const outcome = checkChosenCell(row, col);
 
   if (typeof outcome === 'number') passHitToShip(outcome);
