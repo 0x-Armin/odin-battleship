@@ -21,6 +21,8 @@ const gameboardFactory = (dim=10) => {
       return 'M';
     } else if (board[x][y] === 'H') {
       return 'AH'; 
+    } else if (board[x][y] === 'M') {
+      return 'AM';
     } else {
       const shipHit = board[x][y];
       board[x][y] = 'H';

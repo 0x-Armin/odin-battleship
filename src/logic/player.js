@@ -12,6 +12,9 @@ const playerFactory = () => {
 
   let gameboard = gameboardFactory();
 
+  const getShipArr = () => {
+    return shipArr;
+  }
 
   // TODO: Allow users to fill up board themselves
   const populateBoard = () => {
@@ -48,7 +51,7 @@ const playerFactory = () => {
   }
 
   return {
-    shipArr,
+    getShipArr,
     populateBoard,
     getGameBoard,
   }
