@@ -15,8 +15,6 @@ const playerFactory = () => {
 
   // TODO: Allow users to fill up board themselves
   const populateBoard = () => {
-    console.log(gameboard.board);
-
     // ship 0 of size 2
     gameboard.placeShip(0, 0, 0);
     gameboard.placeShip(0, 0, 1);
