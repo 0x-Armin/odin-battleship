@@ -1,4 +1,5 @@
 import "./style.css";
+import { addTargetGridEL } from "./feEventHandler";
 
 const createDivStructure = () => {
   const mainScreenDiv = document.createElement("div");
@@ -33,15 +34,16 @@ const createTargetGrid = (grid) => {
   const container = document.querySelector(".target-grid");
   clearGrid(container);
 
-  for (let i=0; i < grid.length(); i++) {
-    let row = document.createElement('div');
-    row.classList.add('row');
+  for (let i = 0; i < grid.length(); i++) {
+    let row = document.createElement("div");
+    row.classList.add("row");
 
-    for (let j=0; j < grid.length(); j++) {
-      let square = document.createElement('div');
-      square.classList.add('square');
+    for (let j = 0; j < grid.length(); j++) {
+      let square = document.createElement("div");
+      square.classList.add("square");
       const gridElement = grid.accessBoard(i, j);
-      square.innerText = typeof gridElement === 'number' ? '' : gridElement;
+      square.innerText = typeof gridElement === "number" ? "" : gridElement;
+      square.index = i * 10 + j;
 
       row.appendChild(square);
     }
@@ -53,13 +55,13 @@ const createOceanGrid = (grid) => {
   const container = document.querySelector(".ocean-grid");
   clearGrid(container);
 
-  for (let i=0; i < grid.length(); i++) {
-    let row = document.createElement('div');
-    row.classList.add('row');
+  for (let i = 0; i < grid.length(); i++) {
+    let row = document.createElement("div");
+    row.classList.add("row");
 
-    for (let j=0; j < grid.length(); j++) {
-      let square = document.createElement('div');
-      square.classList.add('square');
+    for (let j = 0; j < grid.length(); j++) {
+      let square = document.createElement("div");
+      square.classList.add("square");
       square.innerText = grid.accessBoard(i, j);
 
       row.appendChild(square);
@@ -68,10 +70,12 @@ const createOceanGrid = (grid) => {
   }
 };
 
+
 const initFrontend = (oceanGrid, targetGrid) => {
   createDivStructure();
   createTargetGrid(targetGrid);
   createOceanGrid(oceanGrid);
+  addTargetGridEL();
 };
 
 export { initFrontend };
