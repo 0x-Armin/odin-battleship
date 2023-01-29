@@ -27,15 +27,21 @@ const game = (() => {
   };
 
   const isGameOver = () => {
+    const opponentShips = players[opponent].getShipArr();
+    for (let ship of opponentShips) {
+      if (!ship.isSunk()) return false;
+    }
+
+    return true;
   };
 
   return {
-    isGameOver,
     getPlayers,
     getCurrPlayer,
     getOpponent,
     toggleCurrPlayer,
     initGame,
+    isGameOver,
   };
 })();
 

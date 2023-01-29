@@ -39,12 +39,23 @@ const makeNextTurnBtnUnclickable = () => {
   nextTurnBtn.disabled = 'disabled';
 }
 
+const displayWinMessage = () => {
+  const currPlayer = game.getCurrPlayer();
+  const msgDiv = document.getElementById("message-div");
+
+  msgDiv.innerText = `Congratulations Player ${currPlayer}! You've won the game! 🔫`;
+}
+
 const updateDOMAfterAttack = (outcome) => {
   if (outcome === "M" || typeof outcome === "number") {
     const opponent = game.getOpponent();
     const targetGrid = game.getPlayers()[opponent].getGameBoard();
     createTargetGrid(targetGrid);
-    makeNextTurnBtnClickable();
+    if (game.isGameOver()) {
+      displayWinMessage();
+    } else {
+      makeNextTurnBtnClickable();
+    }
   } else {
     displayDoubleAttackErrMsg(outcome);
     addTargetGridEL();

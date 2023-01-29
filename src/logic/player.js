@@ -2,7 +2,7 @@ import { shipFactory } from './ship';
 import { gameboardFactory } from './gameboard';
 
 const playerFactory = () => {
-  let shipArr = [
+  const shipArr = [
     shipFactory(2),
     shipFactory(3),
     shipFactory(3),

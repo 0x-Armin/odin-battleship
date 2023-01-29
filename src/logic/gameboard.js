@@ -32,6 +32,7 @@ const gameboardFactory = (dim=10) => {
 
   const areAllShipsSunk = () => {
     const shipIndices = [0, 1, 2, 3, 4];
+    console.log(board.some(row => row.includes(shipIndices)));
     return !board.some(row => row.includes(shipIndices));
   }
 

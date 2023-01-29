@@ -17,7 +17,7 @@ const checkChosenCell = (row, col) => {
 }
 
 const passHitToShip = (outcome) => {
-  game.getPlayers()[game.getCurrPlayer()].getShipArr()[outcome].hit();
+  game.getPlayers()[game.getOpponent()].getShipArr()[outcome].hit();
 }
 
 const handleAttackCell = (event) => {

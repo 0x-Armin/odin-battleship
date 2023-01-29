@@ -14,6 +14,7 @@ const createDivStructure = () => {
 
   const messageDiv = document.createElement('div');
   messageDiv.id = 'message-div';
+  messageDiv.innerText = '';
 
   const nextTurnBtn = document.createElement('button');
   nextTurnBtn.textContent = 'Next turn';

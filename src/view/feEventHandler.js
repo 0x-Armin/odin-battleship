@@ -4,9 +4,12 @@ const addTargetGridEL = () => {
   const targetGridCells = document.querySelectorAll(
     ".target-grid .target-square"
   );
-  targetGridCells.forEach((cell) =>
-    cell.addEventListener("click", handleAttackCell)
-  );
+  targetGridCells.forEach((cell) => {
+    if (!cell.hasAttribute('addedEL')) {
+      cell.addEventListener("click", handleAttackCell);
+      cell.setAttribute('addedEL', true);
+    }
+  });
 };
 
 export { addTargetGridEL };
