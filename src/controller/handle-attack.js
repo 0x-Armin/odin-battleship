@@ -10,7 +10,7 @@ const getRowAndCol = (cellIdx) => {
 }
 
 const checkChosenCell = (row, col) => {
-  const opponent = 1 - game.getCurrPlayer();
+  const opponent = game.getOpponent();
   const outcome = game.getPlayers()[opponent].getGameBoard().receiveAttack(row, col);
 
   return outcome;

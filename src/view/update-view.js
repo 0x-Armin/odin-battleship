@@ -41,11 +41,9 @@ const makeNextTurnBtnUnclickable = () => {
 
 const updateDOMAfterAttack = (outcome) => {
   if (outcome === "M" || typeof outcome === "number") {
-    const opponent = 1 - game.getCurrPlayer();
+    const opponent = game.getOpponent();
     const targetGrid = game.getPlayers()[opponent].getGameBoard();
     createTargetGrid(targetGrid);
-
-    // allow user to pass the turn to the next player
     makeNextTurnBtnClickable();
   } else {
     displayDoubleAttackErrMsg(outcome);
@@ -83,7 +81,7 @@ const updatePlayerDiv = (currPlayer) => {
 
 const createScreenForNextPlayer = () => {
   const currPlayer = game.getCurrPlayer();
-  const opponent = 1 - currPlayer;
+  const opponent = game.getOpponent();
 
   updatePlayerDiv(currPlayer);
 

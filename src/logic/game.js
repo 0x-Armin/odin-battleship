@@ -1,25 +1,39 @@
 import { playerFactory } from "./player";
 
 const game = (() => {
-  let isGameOver = false;
   const players = [playerFactory(), playerFactory()];
   let currPlayer = 0;
+  let opponent = 1;
 
-  const getIsGameOver = () => { return isGameOver; }
-  const getPlayers = () => { return players; }
-  const getCurrPlayer = () => { return currPlayer; }
+  const getPlayers = () => {
+    return players;
+  };
+  const getCurrPlayer = () => {
+    return currPlayer;
+  };
 
-  const toggleCurrPlayer = () => { currPlayer = 1 - currPlayer; }
+  const getOpponent = () => {
+    return opponent;
+  }
+
+  const toggleCurrPlayer = () => {
+    currPlayer = 1 - currPlayer;
+    opponent = 1 - opponent;
+  };
 
   const initGame = () => {
     players[0].populateBoard();
     players[1].populateBoard();
   };
 
+  const isGameOver = () => {
+  };
+
   return {
-    getIsGameOver,
+    isGameOver,
     getPlayers,
     getCurrPlayer,
+    getOpponent,
     toggleCurrPlayer,
     initGame,
   };
