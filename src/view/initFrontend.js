@@ -7,7 +7,8 @@ const createDivStructure = () => {
   mainScreenDiv.id = "main-screen";
 
   const playerNameDiv = document.createElement("div");
-  playerNameDiv.innerText = "Player";
+  playerNameDiv.id = 'player-div';
+  playerNameDiv.innerText = "Player 0";
 
   const infoDiv = document.createElement('div');
 

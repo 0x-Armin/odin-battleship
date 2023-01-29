@@ -16,20 +16,12 @@ const game = (() => {
     players[1].populateBoard();
   };
 
-  const attackCell = (opponent, cellIdx) => {
-    const row = Math.floor(cellIdx / 10);
-    const col = cellIdx % 10;
-
-    players[opponent].getGameBoard().receiveAttack(row, col);
-  }
-
   return {
     getIsGameOver,
     getPlayers,
     getCurrPlayer,
     toggleCurrPlayer,
     initGame,
-    attackCell,
   };
 })();
 

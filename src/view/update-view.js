@@ -19,14 +19,18 @@ const displayDoubleAttackErrMsg = (outcome) => {
 
 const makeNextTurnBtnClickable = () => {
   const nextTurnBtn = document.getElementById("next-turn-btn");
-  nextTurnBtn.classList.remove("not-ready");
-  nextTurnBtn.removeAttribute("disabled");
-  nextTurnBtn.addEventListener("click", () => {
+  const newNextTurnBtn = nextTurnBtn.cloneNode(true);
+
+  newNextTurnBtn.classList.remove("not-ready");
+  newNextTurnBtn.removeAttribute("disabled");
+  newNextTurnBtn.addEventListener("click", () => {
     handleNextTurn();
     makeNextTurnBtnUnclickable();
     updateDOMAfterNextTurn();
     setTimeout(addTargetGridEL, 5000);
   });
+
+  nextTurnBtn.parentNode.replaceChild(newNextTurnBtn, nextTurnBtn);
 };
 
 const makeNextTurnBtnUnclickable = () => {
@@ -47,8 +51,6 @@ const updateDOMAfterAttack = (outcome) => {
     displayDoubleAttackErrMsg(outcome);
     addTargetGridEL();
   }
-
-  console.log(outcome);
 };
 
 const clearDisplayedGrids = () => {
@@ -57,8 +59,6 @@ const clearDisplayedGrids = () => {
 
   clearGrid(targetGridDiv);
   clearGrid(oceanGridDiv);
-
-  console.log("cleared grids");
 };
 
 const indicateLoading = () => {
@@ -69,7 +69,6 @@ const indicateLoading = () => {
     msgDiv.innerText = `Loading next player's screen in ${timeLeft} seconds...`;
     timeLeft--;
 
-    console.log("counting down", timeLeft);
     if (timeLeft === -1) {
       msgDiv.innerText = "";
       clearInterval(countdownInterval);
@@ -77,10 +76,16 @@ const indicateLoading = () => {
   }, 1000);
 };
 
-const createGridsForNextPlayer = () => {
-  console.log("creating grids");
+const updatePlayerDiv = (currPlayer) => {
+  const playerNameDiv = document.getElementById('player-div');
+  playerNameDiv.innerText = `Player ${currPlayer}`;
+}
+
+const createScreenForNextPlayer = () => {
   const currPlayer = game.getCurrPlayer();
   const opponent = 1 - currPlayer;
+
+  updatePlayerDiv(currPlayer);
 
   createTargetGrid(game.getPlayers()[opponent].getGameBoard());
   createOceanGrid(game.getPlayers()[currPlayer].getGameBoard());
@@ -92,7 +97,7 @@ const updateDOMAfterNextTurn = () => {
   // set a timeout for 3 secs
   indicateLoading();
   // display grids for next player
-  setTimeout(createGridsForNextPlayer, 4000);
+  setTimeout(createScreenForNextPlayer, 4000);
 };
 
 export { updateDOMAfterAttack };
