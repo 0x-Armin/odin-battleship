@@ -65,7 +65,28 @@
   border-width: 0.5px; 
 }
 
+#setup-game-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#input-table {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr) 1fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.form-div {
+  grid-column: 3 / 6;
+}
+
+.input-form-ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+}
+
 .not-ready {
   opacity: 0.33;
   filter: alpha(opacity=33);
 }
+
