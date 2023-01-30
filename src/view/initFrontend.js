@@ -28,12 +28,10 @@ const createDivStructure = () => {
   const targetGridDiv = document.createElement("div");
   targetGridDiv.classList.add("grid");
   targetGridDiv.classList.add("target-grid");
-  targetGridDiv.innerText = "target grid";
 
   const oceanGridDiv = document.createElement("div");
   oceanGridDiv.classList.add("grid");
   oceanGridDiv.classList.add("ocean-grid");
-  oceanGridDiv.innerText = "ocean grid";
 
   mainScreenDiv.appendChild(playerNameDiv);
   mainScreenDiv.appendChild(infoDiv);
@@ -45,11 +43,11 @@ const createDivStructure = () => {
 
 
 
-const initFrontend = (oceanGrid, targetGrid) => {
+const initBattleFrontend = (oceanGrid, targetGrid) => {
   createDivStructure();
   createTargetGrid(targetGrid);
   createOceanGrid(oceanGrid);
   addTargetGridEL();
 };
 
-export { initFrontend };
+export { initBattleFrontend };

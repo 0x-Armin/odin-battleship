@@ -14,6 +14,33 @@
   display: flex;
 }
 
+.indicator-sq,
+.empty-sq {
+  width: 40px;
+  height: 40px;
+
+  margin-top: 0.5px;
+  margin-left: 0.5px;
+}
+
+.indicator-sq, 
+.empty-sq {
+  border-style: solid;
+  border-width: 0.5px;
+}
+
+.indicator-sq {
+  border-color: rgba(256, 256, 256,0);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-sq {
+  border-color: black;
+}
+
 .target-square {
   width: 35px;
   height: 35px;
