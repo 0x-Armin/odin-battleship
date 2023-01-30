@@ -70,7 +70,7 @@
   grid-template-columns: 1fr 1fr;
 }
 
-#input-table {
+#user-input-div {
   display: grid;
   grid-template-columns: repeat(4, 2fr) 1fr;
   grid-template-rows: repeat(6, 1fr);

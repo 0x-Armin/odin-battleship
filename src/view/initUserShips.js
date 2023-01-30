@@ -1,6 +1,8 @@
 import "./style.css";
 import { createTemplateGrid } from "./grid";
 
+import { gameRules } from "../logic/gameRules";
+
 const createDivSkeleton = () => {
   const setupGameDiv = document.createElement("div");
   setupGameDiv.id = "setup-game-div";
@@ -15,12 +17,7 @@ const createDivSkeleton = () => {
   setupGameDiv.appendChild(templateGridDiv);
   setupGameDiv.appendChild(userInputDiv);
 
-  document.body.appendChild(setupGameDiv);
-};
-
-const setupTemplateGrid = () => {
-  const templateGridDiv = document.getElementById("template-grid-div");
-  createTemplateGrid(templateGridDiv);
+  return setupGameDiv;
 };
 
 const createUserInputHeader = () => {
@@ -47,13 +44,26 @@ const createUserInputHeader = () => {
   return [nameHeader, lengthHeader, startCoordHeader, orientationHeader, confirmHeader];
 };
 
+const createOptionsForCoord = (selectDiv, axis) => {
+  for (let i = 0; i < 10; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.innerText = `${axis}${i}`;
+
+    selectDiv.appendChild(option);
+  }
+}
+
 const createUserInputRow = (shipName, shipLength) => {
+  // Name of ship for that row
   const rowName = document.createElement('div');
   rowName.innerText = shipName;
 
+  // Length of ship for that row
   const rowLength = document.createElement('div');
   rowLength.innerText = shipLength;
 
+  // Input form for ship's coordinates
   const formDiv = document.createElement('form');
   formDiv.classList.add('form-div');
 
@@ -68,13 +78,7 @@ const createUserInputRow = (shipName, shipLength) => {
 
   const coordRowLiSelect = document.createElement('select');
   coordRowLiSelect.id = `${shipName}-r-coord`;
-  for (let i = 0; i < 10; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.innerText = `r${i}`;
-
-    coordRowLiSelect.appendChild(option);
-  }
+  createOptionsForCoord(coordRowLiSelect, 'r');
 
   coordRowLi.appendChild(coordRowLiLabel);
   coordRowLi.appendChild(coordRowLiSelect);
@@ -87,13 +91,7 @@ const createUserInputRow = (shipName, shipLength) => {
 
   const coordColLiSelect = document.createElement('select');
   coordColLiSelect.id = `${shipName}-c-coord`; 
-  for (let i = 0; i < 10; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.innerText = `c${i}`;
-
-    coordColLiSelect.appendChild(option);
-  }
+  createOptionsForCoord(coordColLiSelect, 'c');
 
   coordColLi.appendChild(coordColLiLabel);
   coordColLi.appendChild(coordColLiSelect);
@@ -142,46 +140,33 @@ const createUserInputRow = (shipName, shipLength) => {
 }
 
 const createUserInputForm = (shipsName, shipsLength) => {
-  const inputTable = document.createElement("div");
-  inputTable.id = "input-table";
+  const userInputDiv = document.getElementById('user-input-div');
 
   const [nameHeader, lengthHeader, startCoordHeader, orientationHeader, confirmHeader] = createUserInputHeader();
-  inputTable.appendChild(nameHeader);
-  inputTable.appendChild(lengthHeader);
-  inputTable.appendChild(startCoordHeader);
-  inputTable.appendChild(orientationHeader);
-  inputTable.appendChild(confirmHeader);
+  userInputDiv.appendChild(nameHeader);
+  userInputDiv.appendChild(lengthHeader);
+  userInputDiv.appendChild(startCoordHeader);
+  userInputDiv.appendChild(orientationHeader);
+  userInputDiv.appendChild(confirmHeader);
 
   for (let i = 0; i < shipsName.length; i++) {
     const [rowName, rowLength, formDiv] = createUserInputRow(shipsName[i], shipsLength[i]);
-    inputTable.appendChild(rowName);
-    inputTable.appendChild(rowLength);
-    inputTable.appendChild(formDiv);
+    userInputDiv.appendChild(rowName);
+    userInputDiv.appendChild(rowLength);
+    userInputDiv.appendChild(formDiv);
   }
-
-  return inputTable;
-};
-
-const askforUserInputs = () => {
-  const shipsName = [
-    "Destroyer",
-    "Submarine",
-    "Cruiser",
-    "Battleship",
-    "Carrier",
-  ];
-  const shipsLength = [2, 3, 3, 4, 5];
-
-  const inputTable = createUserInputForm(shipsName, shipsLength);
-  document.getElementById('user-input-div').appendChild(inputTable);
 };
 
 const initUserShips = () => {
-  createDivSkeleton();
-  // Fill in template grid
-  setupTemplateGrid();
-  // Setup table for user's input
-  askforUserInputs();
+  const gameSetupDiv = createDivSkeleton();
+  document.body.appendChild(gameSetupDiv);
+
+  const templateGridDiv = document.getElementById("template-grid-div");
+  createTemplateGrid(templateGridDiv);
+
+  const shipsName = gameRules.getShipsName();
+  const shipsLength = gameRules.getShipsLength();
+  createUserInputForm(shipsName, shipsLength);
 };
 
 export { initUserShips };
