@@ -73,7 +73,7 @@
 #user-input-div {
   display: grid;
   grid-template-columns: repeat(4, 2fr) 1fr;
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(7, 1fr);
 }
 
 .form-div {

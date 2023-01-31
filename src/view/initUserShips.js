@@ -1,5 +1,5 @@
 import "./style.css";
-import { createTemplateGrid } from "./grid";
+import { createTemplateGrid, clearGrid } from "./grid";
 
 import { game } from "../logic/game";
 import { gameRules } from "../logic/gameRules";
@@ -66,28 +66,36 @@ const createOptionsForCoord = (selectDiv, axis) => {
 const makeCfmBtnUnusable = (event) => {
   const btnName = event.srcElement[3].id;
   const cfmBtn = document.getElementById(btnName);
-  cfmBtn.classList.add('not-ready');
-  cfmBtn.disabled = 'disabled';
-}
+  cfmBtn.classList.add("not-ready");
+  cfmBtn.disabled = "disabled";
+};
 
 const checkAllCfmBtnDisabled = () => {
   const allDisabledBtnCount = 5;
-  const cfmBtnArr = document.querySelectorAll('.cfm-coord-btn');
+  const cfmBtnArr = document.querySelectorAll(".cfm-coord-btn");
   let disabledBtnCount = 0;
   cfmBtnArr.forEach((btn) => {
-    if (btn.hasAttribute('disabled')) disabledBtnCount++;
+    if (btn.hasAttribute("disabled")) disabledBtnCount++;
   });
 
-  console.log(disabledBtnCount);
   return disabledBtnCount == allDisabledBtnCount;
-}
+};
 
 const notifyUserOfErrInPlacingShip = (event) => {
   const rCoordId = event.srcElement[0].id;
   const rCoordSel = document.getElementById(rCoordId);
 
-  rCoordSel.setCustomValidity('Either out of bounds or a cell is already occupied. Pick another spot!');
+  rCoordSel.setCustomValidity(
+    "Either out of bounds or a cell is already occupied. Pick another spot!"
+  );
   rCoordSel.reportValidity();
+};
+
+const enableNextStepBtn = () => {
+  const nextStepBtn = document.getElementById('next-step-btn');
+  nextStepBtn.disabled = false;
+
+  // CONT: Enable player to load for next player or start game
 }
 
 const createUserInputRow = (shipName, shipLength) => {
@@ -106,15 +114,16 @@ const createUserInputRow = (shipName, shipLength) => {
   formDiv.addEventListener("submit", (event) => {
     event.preventDefault();
     const placedShip = confirmShipPlacement(event);
-    console.log(event);
     if (placedShip) {
       const templateGridDiv = document.getElementById("template-grid-div");
       const player = game.getCurrPlayer();
       const playerBoard = game.getPlayers()[player].getGameBoard();
       createTemplateGrid(templateGridDiv, playerBoard);
+      displayWhichPlayer(templateGridDiv);
       makeCfmBtnUnusable(event);
-      
+
       const placedAllShips = checkAllCfmBtnDisabled();
+      if (placedAllShips) enableNextStepBtn();
       // CONT: Make 'next action' btn available by checking if all btns
       // with 'cfm-coord-btn' class have been disabled
     } else {
@@ -222,6 +231,19 @@ const createUserInputForm = (shipsName, shipsLength) => {
     userInputDiv.appendChild(rowLength);
     userInputDiv.appendChild(formDiv);
   }
+
+  const nextStepBtn = document.createElement("button");
+  nextStepBtn.innerText = "Next step";
+  nextStepBtn.id = 'next-step-btn';
+  nextStepBtn.disabled = true;
+  userInputDiv.appendChild(nextStepBtn);
+};
+
+const displayWhichPlayer = (div) => {
+  const whichPlayerDiv = document.createElement("div");
+  whichPlayerDiv.innerText = `Player ${game.getCurrPlayer()}, please place your ships`;
+
+  div.insertBefore(whichPlayerDiv, div.firstChild);
 };
 
 const initUserShips = (player) => {
@@ -231,6 +253,7 @@ const initUserShips = (player) => {
   const templateGridDiv = document.getElementById("template-grid-div");
   const playerBoard = game.getPlayers()[player].getGameBoard();
   createTemplateGrid(templateGridDiv, playerBoard);
+  displayWhichPlayer(templateGridDiv);
 
   const shipsName = gameRules.getShipsName();
   const shipsLength = gameRules.getShipsLength();
