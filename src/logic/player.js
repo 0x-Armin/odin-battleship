@@ -19,8 +19,6 @@ const playerFactory = () => {
   const checkBoardForShipPlacement = (i, j, dx, dy) => {
     for (let x of dx) {
       for (let y of dy) {
-        console.log(i+x);
-        console.log(j+y);
         if (gameboard.accessBoard(i+x, j+y) !== "") return false;
       }
     }
@@ -40,10 +38,10 @@ const playerFactory = () => {
   const populateBoard = (i, j, idx, orientation, length) => {
     const dx = [];
     const dy = [];
-    if (orientation === "V") {
+    if (orientation === "H") {
       dx.push(0);
       for (let y = 0; y < length; y++) dy.push(y);
-    } else if (orientation === "H") {
+    } else if (orientation === "V") {
       for (let x = 0; x < length; x++) dx.push(x);
       dy.push(0);
     }

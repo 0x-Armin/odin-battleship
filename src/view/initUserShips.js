@@ -63,6 +63,33 @@ const createOptionsForCoord = (selectDiv, axis) => {
   }
 };
 
+const makeCfmBtnUnusable = (event) => {
+  const btnName = event.srcElement[3].id;
+  const cfmBtn = document.getElementById(btnName);
+  cfmBtn.classList.add('not-ready');
+  cfmBtn.disabled = 'disabled';
+}
+
+const checkAllCfmBtnDisabled = () => {
+  const allDisabledBtnCount = 5;
+  const cfmBtnArr = document.querySelectorAll('.cfm-coord-btn');
+  let disabledBtnCount = 0;
+  cfmBtnArr.forEach((btn) => {
+    if (btn.hasAttribute('disabled')) disabledBtnCount++;
+  });
+
+  console.log(disabledBtnCount);
+  return disabledBtnCount == allDisabledBtnCount;
+}
+
+const notifyUserOfErrInPlacingShip = (event) => {
+  const rCoordId = event.srcElement[0].id;
+  const rCoordSel = document.getElementById(rCoordId);
+
+  rCoordSel.setCustomValidity('Either out of bounds or a cell is already occupied. Pick another spot!');
+  rCoordSel.reportValidity();
+}
+
 const createUserInputRow = (shipName, shipLength) => {
   // Name of ship for that row
   const rowName = document.createElement("div");
@@ -79,12 +106,20 @@ const createUserInputRow = (shipName, shipLength) => {
   formDiv.addEventListener("submit", (event) => {
     event.preventDefault();
     const placedShip = confirmShipPlacement(event);
-    console.log(placedShip);
+    console.log(event);
     if (placedShip) {
       const templateGridDiv = document.getElementById("template-grid-div");
       const player = game.getCurrPlayer();
       const playerBoard = game.getPlayers()[player].getGameBoard();
       createTemplateGrid(templateGridDiv, playerBoard);
+      makeCfmBtnUnusable(event);
+      
+      const placedAllShips = checkAllCfmBtnDisabled();
+      // CONT: Make 'next action' btn available by checking if all btns
+      // with 'cfm-coord-btn' class have been disabled
+    } else {
+      // CONT: Notify user of error. Ask for resubmission
+      notifyUserOfErrInPlacingShip(event);
     }
   });
 
@@ -95,10 +130,10 @@ const createUserInputRow = (shipName, shipLength) => {
   coordRowLi.classList.add("input-li");
 
   const coordRowLiLabel = document.createElement("label");
-  coordRowLiLabel.for = `r-coord`;
+  coordRowLiLabel.for = `${shipName}-r-coord`;
 
   const coordRowLiSelect = document.createElement("select");
-  coordRowLiSelect.id = `r-coord`;
+  coordRowLiSelect.id = `${shipName}-r-coord`;
   createOptionsForCoord(coordRowLiSelect, "r");
 
   coordRowLi.appendChild(coordRowLiLabel);
@@ -148,6 +183,7 @@ const createUserInputRow = (shipName, shipLength) => {
   confirmBtn.type = "submit";
   confirmBtn.innerText = "Confirm";
   confirmBtn.classList.add("cfm-coord-btn");
+  confirmBtn.id = `${shipName}-cfm-btn`;
 
   confirmBtnLi.appendChild(confirmBtn);
 
