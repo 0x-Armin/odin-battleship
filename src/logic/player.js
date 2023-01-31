@@ -17,8 +17,11 @@ const playerFactory = () => {
   };
 
   const checkBoardForShipPlacement = (i, j, dx, dy) => {
+    const gameBoardDim = 10;
+
     for (let x of dx) {
       for (let y of dy) {
+        if (i+x >= gameBoardDim || j+y >= getGameBoard) return false;
         if (gameboard.accessBoard(i+x, j+y) !== "") return false;
       }
     }
