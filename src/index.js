@@ -5,7 +5,7 @@ import { game } from "./logic/game";
 import { addTargetGridEL } from "./view/feEventHandler";
 
 
-game.initGame();
+// game.initGame();
 
 let currPlayer = game.getCurrPlayer();
 let opponent = 1 - currPlayer;
@@ -15,6 +15,6 @@ let targetGrid = game.getPlayers()[opponent].getGameBoard();
 
 
 // ask user for input here
-initUserShips();
+initUserShips(currPlayer);
 // initBattleFrontend(oceanGrid, targetGrid);
 // addTargetGridEL();

@@ -1,4 +1,5 @@
-const createTemplateGrid = (container) => {
+const createTemplateGrid = (container, grid) => {
+  clearGrid(container);
   const gridSize = 11;
 
   for (let i = 0; i < gridSize; i++) {
@@ -17,6 +18,7 @@ const createTemplateGrid = (container) => {
         infoSq.innerText = `r${i-1}`;
       } else {
         infoSq.classList.add('empty-sq');
+        infoSq.innerText = grid.accessBoard(i-1, j-1);
       }
 
       row.appendChild(infoSq);
