@@ -86,13 +86,36 @@ button {
 /*
   1.2 USER INPUT FORM
 */
+#user-input-form {
+  margin-top: 2%;
+  height: 86%;
+
+  display: grid;
+  grid-template-columns: 1fr repeat(4, 2fr) 1fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
 .input-form-ul {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1.3fr;
+  grid-template-columns: 1fr 1fr 2fr 1.4fr;
+}
+
+.form-div {
+  grid-column: 4 / 7;
+}
+
+.below-form {
+  display: flex;
+  justify-content: center;
 }
 
 #next-step-btn {
-  grid-column: 3 / 4;
+  height: 40px;
+  padding: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*
@@ -143,16 +166,6 @@ button {
 }
 
 
-
-#user-input-div {
-  display: grid;
-  grid-template-columns: repeat(4, 2fr) 1fr;
-  grid-template-rows: repeat(7, 1fr);
-}
-
-.form-div {
-  grid-column: 3 / 6;
-}
 
 
 

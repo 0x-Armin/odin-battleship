@@ -105,6 +105,10 @@ const handleShipPlacementSubmission = (event) => {
 };
 
 const createUserInputHeader = () => {
+  const indexHeader = document.createElement('div');
+  indexHeader.innerText = 'Index';
+  indexHeader.classList.add('form-header');
+
   const nameHeader = document.createElement("div");
   nameHeader.innerText = "Name";
   nameHeader.classList.add("form-header");
@@ -126,6 +130,7 @@ const createUserInputHeader = () => {
   confirmHeader.classList.add("form-header");
 
   return [
+    indexHeader,
     nameHeader,
     lengthHeader,
     startCoordHeader,
@@ -144,7 +149,10 @@ const createOptionsForCoord = (selectDiv, axis) => {
   }
 };
 
-const createUserInputRow = (shipName, shipLength) => {
+const createUserInputRow = (shipIdx, shipName, shipLength) => {
+  const rowIndex = document.createElement('div');
+  rowIndex.innerText = shipIdx;
+
   // Name of ship for that row
   const rowName = document.createElement("div");
   rowName.innerText = shipName;
@@ -234,40 +242,53 @@ const createUserInputRow = (shipName, shipLength) => {
 
   formDiv.appendChild(inputFormUl);
 
-  return [rowName, rowLength, formDiv];
+  return [rowIndex, rowName, rowLength, formDiv];
 };
 
 const createUserInputForm = (shipsName, shipsLength) => {
   const userInputDiv = document.getElementById("user-input-div");
+  const userInputForm = document.createElement('div');
+  userInputForm.id = 'user-input-form';
 
   const [
+    indexHeader,
     nameHeader,
     lengthHeader,
     startCoordHeader,
     orientationHeader,
     confirmHeader,
   ] = createUserInputHeader();
-  userInputDiv.appendChild(nameHeader);
-  userInputDiv.appendChild(lengthHeader);
-  userInputDiv.appendChild(startCoordHeader);
-  userInputDiv.appendChild(orientationHeader);
-  userInputDiv.appendChild(confirmHeader);
+  userInputForm.appendChild(indexHeader);
+  userInputForm.appendChild(nameHeader);
+  userInputForm.appendChild(lengthHeader);
+  userInputForm.appendChild(startCoordHeader);
+  userInputForm.appendChild(orientationHeader);
+  userInputForm.appendChild(confirmHeader);
 
   for (let i = 0; i < shipsName.length; i++) {
-    const [rowName, rowLength, formDiv] = createUserInputRow(
+    const [rowIndex, rowName, rowLength, formDiv] = createUserInputRow(
+      i,
       shipsName[i],
       shipsLength[i]
     );
-    userInputDiv.appendChild(rowName);
-    userInputDiv.appendChild(rowLength);
-    userInputDiv.appendChild(formDiv);
+    userInputForm.appendChild(rowIndex);
+    userInputForm.appendChild(rowName);
+    userInputForm.appendChild(rowLength);
+    userInputForm.appendChild(formDiv);
   }
+
+  userInputDiv.appendChild(userInputForm);
+
+  const belowFormRow = document.createElement('div');
+  belowFormRow.classList.add('below-form');
 
   const nextStepBtn = document.createElement("button");
   nextStepBtn.innerText = "Next step";
   nextStepBtn.id = "next-step-btn";
   nextStepBtn.disabled = true;
-  userInputDiv.appendChild(nextStepBtn);
+
+  belowFormRow.appendChild(nextStepBtn);
+  userInputDiv.appendChild(belowFormRow);
 };
 
 const createHeaderDiv = (div) => {
