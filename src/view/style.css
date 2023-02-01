@@ -18,7 +18,7 @@ button {
 }
 
 /*
-  PLACE SHIP SCREEN
+  1. PLACE SHIP SCREEN
 */
 .header {
   margin: 24px 0;
@@ -42,36 +42,12 @@ button {
   grid-template-columns: 1fr 1fr;
 }
 
+/*
+  1.1 GRID
+*/ 
 #template-grid-div {
   margin: auto;
   width: 80%;
-}
-
-.empty-sq {
-  background-color: rgb(3, 3, 53);
-}
-
-.ship-sq {
-  background-color: grey;
-}
-
-/*
-  BATTLE SCREEN
-*/
-#main-screen {
-  display: grid;
-  grid-template-rows: 1fr 1fr 400px 300px;
-}
-
-.target-grid {
-  flex-grow: 2;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  display: flex;
 }
 
 .indicator-sq,
@@ -98,12 +74,48 @@ button {
   align-items: center;
 }
 
-.indicator-sq {
-  border-color: rgba(256, 256, 256,0);
+.empty-sq {
+  background-color: rgb(3, 3, 53);
+  border-color: black;
 }
 
-.empty-sq {
-  border-color: black;
+.ship-sq {
+  background-color: grey;
+}
+
+/*
+  1.2 USER INPUT FORM
+*/
+.input-form-ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1.3fr;
+}
+
+#next-step-btn {
+  grid-column: 3 / 4;
+}
+
+/*
+  BATTLE SCREEN
+*/
+#main-screen {
+  display: grid;
+  grid-template-rows: 1fr 1fr 400px 300px;
+}
+
+.target-grid {
+  flex-grow: 2;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.indicator-sq {
+  border-color: rgba(256, 256, 256,0);
 }
 
 .target-square {
@@ -142,10 +154,7 @@ button {
   grid-column: 3 / 6;
 }
 
-.input-form-ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr;
-}
+
 
 .not-ready {
   opacity: 0.33;

@@ -199,7 +199,7 @@ const createUserInputRow = (shipName, shipLength) => {
   orientationLiLabel.for = `orientation`;
 
   const orientationLiSelect = document.createElement("select");
-  orientationLiSelect.id = `orientation`;
+  orientationLiSelect.classList.add('orientation');
 
   const horOrientationOption = document.createElement("option");
   horOrientationOption.value = "H";
