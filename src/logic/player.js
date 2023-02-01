@@ -21,7 +21,7 @@ const playerFactory = () => {
 
     for (let x of dx) {
       for (let y of dy) {
-        if (i+x >= gameBoardDim || j+y >= getGameBoard) return false;
+        if (i+x >= gameBoardDim || j+y >= gameBoardDim) return false;
         if (gameboard.accessBoard(i+x, j+y) !== "") return false;
       }
     }
@@ -55,32 +55,6 @@ const playerFactory = () => {
     }
 
     return false;
-    // // ship 0 of size 2
-    // gameboard.placeShip(0, 0, 0);
-    // gameboard.placeShip(0, 0, 1);
-
-    // // ship 1 of size 3
-    // gameboard.placeShip(1, 1, 2);
-    // gameboard.placeShip(1, 2, 2);
-    // gameboard.placeShip(1, 3, 2);
-
-    // // ship 2 of size 3
-    // gameboard.placeShip(2, 3, 7);
-    // gameboard.placeShip(2, 3, 8);
-    // gameboard.placeShip(2, 3, 9);
-
-    // // ship 3 of size 4
-    // gameboard.placeShip(3, 7, 4);
-    // gameboard.placeShip(3, 7, 5);
-    // gameboard.placeShip(3, 7, 6);
-    // gameboard.placeShip(3, 7, 9);
-
-    // // ship 4 of size 5
-    // gameboard.placeShip(4, 5, 9);
-    // gameboard.placeShip(4, 6, 9);
-    // gameboard.placeShip(4, 7, 9);
-    // gameboard.placeShip(4, 8, 9);
-    // gameboard.placeShip(4, 9, 9);
   };
 
   const getGameBoard = () => {

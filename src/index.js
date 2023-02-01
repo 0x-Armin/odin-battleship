@@ -1,5 +1,5 @@
 import { initUserShips } from "./view/initUserShips";
-import { clearBody, initBattleFrontend } from "./view/initFrontend";
+import { clearBody, initBattleFrontend } from "./view/initBattleFrontend";
 
 import { game } from "./logic/game";
 import { addTargetGridEL } from "./view/feEventHandler";
@@ -7,15 +7,9 @@ import { addTargetGridEL } from "./view/feEventHandler";
 
 // game.initGame();
 
-let currPlayer = game.getCurrPlayer();
-let opponent = 1 - currPlayer;
-
-let oceanGrid = game.getPlayers()[currPlayer].getGameBoard();
-let targetGrid = game.getPlayers()[opponent].getGameBoard();
-
-
 // ask user for input here
 clearBody();
+let currPlayer = 0; // 0 by default
 initUserShips(currPlayer);
 // initBattleFrontend(oceanGrid, targetGrid);
 // addTargetGridEL();

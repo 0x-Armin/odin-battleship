@@ -1,5 +1,5 @@
 import "./style.css";
-import { clearBody } from "./initFrontend";
+import { clearBody, initBattleFrontend } from "./initBattleFrontend";
 import { createTemplateGrid } from "./grid";
 
 import { game } from "../logic/game";
@@ -93,21 +93,22 @@ const notifyUserOfErrInPlacingShip = (event) => {
 };
 
 const enableNextStepBtn = () => {
-  const nextStepBtn = document.getElementById('next-step-btn');
+  const nextStepBtn = document.getElementById("next-step-btn");
   nextStepBtn.disabled = false;
 
-  nextStepBtn.addEventListener('click', () => {
+  nextStepBtn.addEventListener("click", () => {
     game.toggleCurrPlayer();
     const currPlayer = game.getCurrPlayer();
     if (currPlayer === 0) {
-      // start game
-      console.log('start game');
+      let oceanGrid = game.getPlayers()[currPlayer].getGameBoard();
+      let targetGrid = game.getPlayers()[opponent].getGameBoard();
+      initBattleFrontend(targetGrid, oceanGrid);
     } else {
       clearBody();
       initUserShips(currPlayer);
     }
   });
-}
+};
 
 const createUserInputRow = (shipName, shipLength) => {
   // Name of ship for that row
@@ -135,11 +136,7 @@ const createUserInputRow = (shipName, shipLength) => {
 
       const placedAllShips = checkAllCfmBtnDisabled();
       if (placedAllShips) enableNextStepBtn();
-      // CONT: Make 'next action' btn available by checking if all btns
-      // with 'cfm-coord-btn' class have been disabled
-    } else {
-      notifyUserOfErrInPlacingShip(event);
-    }
+    } else notifyUserOfErrInPlacingShip(event);
   });
 
   const inputFormUl = document.createElement("ul");
@@ -244,7 +241,7 @@ const createUserInputForm = (shipsName, shipsLength) => {
 
   const nextStepBtn = document.createElement("button");
   nextStepBtn.innerText = "Next step";
-  nextStepBtn.id = 'next-step-btn';
+  nextStepBtn.id = "next-step-btn";
   nextStepBtn.disabled = true;
   userInputDiv.appendChild(nextStepBtn);
 };

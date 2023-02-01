@@ -49,7 +49,7 @@ const createDivStructure = () => {
 
 
 
-const initBattleFrontend = (oceanGrid, targetGrid) => {
+const initBattleFrontend = (targetGrid, oceanGrid) => {
   createDivStructure();
   createTargetGrid(targetGrid);
   createOceanGrid(oceanGrid);
