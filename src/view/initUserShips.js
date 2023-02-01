@@ -100,6 +100,9 @@ const enableNextStepBtn = () => {
     game.toggleCurrPlayer();
     const currPlayer = game.getCurrPlayer();
     if (currPlayer === 0) {
+      clearBody();
+
+      const opponent = 1 - currPlayer;
       let oceanGrid = game.getPlayers()[currPlayer].getGameBoard();
       let targetGrid = game.getPlayers()[opponent].getGameBoard();
       initBattleFrontend(targetGrid, oceanGrid);
