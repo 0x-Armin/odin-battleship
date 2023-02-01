@@ -3,7 +3,7 @@ import { game } from "../logic/game";
 import { addTargetGridEL } from "./feEventHandler";
 import { clearGrid, createTargetGrid, createOceanGrid } from "./grid";
 
-import { handleNextTurn } from "../controller/handle-next-turn";
+import { handleNextTurnInGame } from "../controller/handle-next-turn";
 
 const displayDoubleAttackErrMsg = (outcome) => {
   const msgDiv = document.getElementById("message-div");
@@ -24,7 +24,7 @@ const makeNextTurnBtnClickable = () => {
   newNextTurnBtn.classList.remove("not-ready");
   newNextTurnBtn.removeAttribute("disabled");
   newNextTurnBtn.addEventListener("click", () => {
-    handleNextTurn();
+    handleNextTurnInGame();
     makeNextTurnBtnUnclickable();
     updateDOMAfterNextTurn();
     setTimeout(addTargetGridEL, 5000);

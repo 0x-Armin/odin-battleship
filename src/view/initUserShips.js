@@ -2,10 +2,10 @@ import "./style.css";
 import { clearBody, initBattleFrontend } from "./initBattleFrontend";
 import { createTemplateGrid } from "./grid";
 
-import { game } from "../logic/game";
 import { gameRules } from "../logic/gameRules";
 
 import { confirmShipPlacement } from "../controller/handle-place-ships";
+import { getBoard, getCurrBoard, getCurrPlayer, handleNextTurnDuringPlacement } from "../controller/handle-next-turn";
 
 const createDivSkeleton = () => {
   const setupGameDiv = document.createElement("div");
@@ -97,17 +97,11 @@ const enableNextStepBtn = () => {
   nextStepBtn.disabled = false;
 
   nextStepBtn.addEventListener("click", () => {
-    game.toggleCurrPlayer();
-    const currPlayer = game.getCurrPlayer();
+    clearBody();
+    const [currPlayer, targetGrid, oceanGrid] = handleNextTurnDuringPlacement();
     if (currPlayer === 0) {
-      clearBody();
-
-      const opponent = 1 - currPlayer;
-      let oceanGrid = game.getPlayers()[currPlayer].getGameBoard();
-      let targetGrid = game.getPlayers()[opponent].getGameBoard();
       initBattleFrontend(targetGrid, oceanGrid);
     } else {
-      clearBody();
       initUserShips(currPlayer);
     }
   });
@@ -131,8 +125,7 @@ const createUserInputRow = (shipName, shipLength) => {
     const placedShip = confirmShipPlacement(event);
     if (placedShip) {
       const templateGridDiv = document.getElementById("template-grid-div");
-      const player = game.getCurrPlayer();
-      const playerBoard = game.getPlayers()[player].getGameBoard();
+      const playerBoard = getCurrBoard();
       createTemplateGrid(templateGridDiv, playerBoard);
       displayWhichPlayer(templateGridDiv);
       makeCfmBtnUnusable(event);
@@ -251,7 +244,7 @@ const createUserInputForm = (shipsName, shipsLength) => {
 
 const displayWhichPlayer = (div) => {
   const whichPlayerDiv = document.createElement("div");
-  whichPlayerDiv.innerText = `Player ${game.getCurrPlayer()}, please place your ships.`;
+  whichPlayerDiv.innerText = `Player ${getCurrPlayer()}, please place your ships.`;
 
   div.insertBefore(whichPlayerDiv, div.firstChild);
 };
@@ -261,7 +254,7 @@ const initUserShips = (player) => {
   document.body.appendChild(gameSetupDiv);
 
   const templateGridDiv = document.getElementById("template-grid-div");
-  const playerBoard = game.getPlayers()[player].getGameBoard();
+  const playerBoard = getBoard(player);
   createTemplateGrid(templateGridDiv, playerBoard);
   displayWhichPlayer(templateGridDiv);
 

@@ -26,8 +26,6 @@ const handleAttackCell = (event) => {
   const outcome = checkChosenCell(row, col);
 
   if (typeof outcome === 'number') passHitToShip(outcome);
-
-  // Fire outcome to DOM's method
   updateDOMAfterAttack(outcome);
 }
 
