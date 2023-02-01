@@ -29,6 +29,81 @@ const createDivSkeleton = () => {
   return setupGameDiv;
 };
 
+
+const checkAllCfmBtnDisabled = () => {
+  const allDisabledBtnCount = 5;
+  const cfmBtnArr = document.querySelectorAll(".cfm-coord-btn");
+  let disabledBtnCount = 0;
+  cfmBtnArr.forEach((btn) => {
+    if (btn.hasAttribute("disabled")) disabledBtnCount++;
+  });
+
+  return disabledBtnCount == allDisabledBtnCount;
+};
+
+const makeCfmBtnUnusable = (event) => {
+  const btnName = event.srcElement[3].id;
+  const cfmBtn = document.getElementById(btnName);
+  cfmBtn.classList.add("not-ready");
+  cfmBtn.disabled = "disabled";
+};
+
+
+const enableNextStepBtn = () => {
+  const nextStepBtn = document.getElementById("next-step-btn");
+  nextStepBtn.disabled = false;
+
+  nextStepBtn.addEventListener("click", () => {
+    clearBody();
+    const [currPlayer, targetGrid, oceanGrid] = handleNextTurnDuringPlacement();
+    if (currPlayer === 0) {
+      initBattleFrontend(targetGrid, oceanGrid);
+    } else {
+      initUserShips(currPlayer);
+    }
+  });
+};
+
+const notifyUserOfErrInPlacingShip = (event) => {
+  const rCoordId = event.srcElement[0].id;
+  const rCoordSel = document.getElementById(rCoordId);
+
+  rCoordSel.setCustomValidity(
+    "Either out of bounds or a cell is already occupied. Pick another spot!"
+  );
+  rCoordSel.reportValidity();
+};
+
+const relistenToShipPlacement = (event) => {
+  const formId = event.srcElement.id;
+  let oldForm = document.getElementById(formId);
+  let newForm = oldForm.cloneNode(true);
+  newForm.shipName = oldForm.shipName;
+  newForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleShipPlacementSubmission(event);
+  });
+
+  oldForm.parentNode.replaceChild(newForm, oldForm);
+}
+
+const handleShipPlacementSubmission = (event) => {
+  const placedShip = confirmShipPlacement(event);
+  if (placedShip) {
+    const templateGridDiv = document.getElementById("template-grid-div");
+    const playerBoard = getCurrBoard();
+    createTemplateGrid(templateGridDiv, playerBoard);
+    displayWhichPlayer(templateGridDiv);
+    makeCfmBtnUnusable(event);
+
+    const placedAllShips = checkAllCfmBtnDisabled();
+    if (placedAllShips) enableNextStepBtn();
+  } else {
+    notifyUserOfErrInPlacingShip(event);
+    relistenToShipPlacement(event);
+  }
+};
+
 const createUserInputHeader = () => {
   const nameHeader = document.createElement("div");
   nameHeader.innerText = "Name";
@@ -66,79 +141,6 @@ const createOptionsForCoord = (selectDiv, axis) => {
     option.innerText = `${axis}${i}`;
 
     selectDiv.appendChild(option);
-  }
-};
-
-const makeCfmBtnUnusable = (event) => {
-  const btnName = event.srcElement[3].id;
-  const cfmBtn = document.getElementById(btnName);
-  cfmBtn.classList.add("not-ready");
-  cfmBtn.disabled = "disabled";
-};
-
-const checkAllCfmBtnDisabled = () => {
-  const allDisabledBtnCount = 5;
-  const cfmBtnArr = document.querySelectorAll(".cfm-coord-btn");
-  let disabledBtnCount = 0;
-  cfmBtnArr.forEach((btn) => {
-    if (btn.hasAttribute("disabled")) disabledBtnCount++;
-  });
-
-  return disabledBtnCount == allDisabledBtnCount;
-};
-
-const notifyUserOfErrInPlacingShip = (event) => {
-  const rCoordId = event.srcElement[0].id;
-  const rCoordSel = document.getElementById(rCoordId);
-
-  rCoordSel.setCustomValidity(
-    "Either out of bounds or a cell is already occupied. Pick another spot!"
-  );
-  rCoordSel.reportValidity();
-};
-
-const enableNextStepBtn = () => {
-  const nextStepBtn = document.getElementById("next-step-btn");
-  nextStepBtn.disabled = false;
-
-  nextStepBtn.addEventListener("click", () => {
-    clearBody();
-    const [currPlayer, targetGrid, oceanGrid] = handleNextTurnDuringPlacement();
-    if (currPlayer === 0) {
-      initBattleFrontend(targetGrid, oceanGrid);
-    } else {
-      initUserShips(currPlayer);
-    }
-  });
-};
-
-const relistenToShipPlacement = (event) => {
-  const formId = event.srcElement.id;
-  let oldForm = document.getElementById(formId);
-  let newForm = oldForm.cloneNode(true);
-  newForm.shipName = oldForm.shipName;
-  newForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    handleShipPlacementSubmission(event);
-  });
-
-  oldForm.parentNode.replaceChild(newForm, oldForm);
-}
-
-const handleShipPlacementSubmission = (event) => {
-  const placedShip = confirmShipPlacement(event);
-  if (placedShip) {
-    const templateGridDiv = document.getElementById("template-grid-div");
-    const playerBoard = getCurrBoard();
-    createTemplateGrid(templateGridDiv, playerBoard);
-    displayWhichPlayer(templateGridDiv);
-    makeCfmBtnUnusable(event);
-
-    const placedAllShips = checkAllCfmBtnDisabled();
-    if (placedAllShips) enableNextStepBtn();
-  } else {
-    notifyUserOfErrInPlacingShip(event);
-    relistenToShipPlacement(event);
   }
 };
 
