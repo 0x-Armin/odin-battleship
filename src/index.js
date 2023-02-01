@@ -1,5 +1,5 @@
 import { initUserShips } from "./view/initUserShips";
-import { initBattleFrontend } from "./view/initFrontend";
+import { clearBody, initBattleFrontend } from "./view/initFrontend";
 
 import { game } from "./logic/game";
 import { addTargetGridEL } from "./view/feEventHandler";
@@ -15,6 +15,7 @@ let targetGrid = game.getPlayers()[opponent].getGameBoard();
 
 
 // ask user for input here
+clearBody();
 initUserShips(currPlayer);
 // initBattleFrontend(oceanGrid, targetGrid);
 // addTargetGridEL();

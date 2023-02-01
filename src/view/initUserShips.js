@@ -1,5 +1,6 @@
 import "./style.css";
-import { createTemplateGrid, clearGrid } from "./grid";
+import { clearBody } from "./initFrontend";
+import { createTemplateGrid } from "./grid";
 
 import { game } from "../logic/game";
 import { gameRules } from "../logic/gameRules";
@@ -95,7 +96,17 @@ const enableNextStepBtn = () => {
   const nextStepBtn = document.getElementById('next-step-btn');
   nextStepBtn.disabled = false;
 
-  // CONT: Enable player to load for next player or start game
+  nextStepBtn.addEventListener('click', () => {
+    game.toggleCurrPlayer();
+    const currPlayer = game.getCurrPlayer();
+    if (currPlayer === 0) {
+      // start game
+      console.log('start game');
+    } else {
+      clearBody();
+      initUserShips(currPlayer);
+    }
+  });
 }
 
 const createUserInputRow = (shipName, shipLength) => {
@@ -127,7 +138,6 @@ const createUserInputRow = (shipName, shipLength) => {
       // CONT: Make 'next action' btn available by checking if all btns
       // with 'cfm-coord-btn' class have been disabled
     } else {
-      // CONT: Notify user of error. Ask for resubmission
       notifyUserOfErrInPlacingShip(event);
     }
   });
@@ -241,7 +251,7 @@ const createUserInputForm = (shipsName, shipsLength) => {
 
 const displayWhichPlayer = (div) => {
   const whichPlayerDiv = document.createElement("div");
-  whichPlayerDiv.innerText = `Player ${game.getCurrPlayer()}, please place your ships`;
+  whichPlayerDiv.innerText = `Player ${game.getCurrPlayer()}, please place your ships.`;
 
   div.insertBefore(whichPlayerDiv, div.firstChild);
 };

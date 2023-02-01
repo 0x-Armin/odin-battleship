@@ -2,6 +2,12 @@ import "./style.css";
 import { createTargetGrid, createOceanGrid } from "./grid";
 import { addTargetGridEL } from "./feEventHandler";
 
+const clearBody = () => {
+  while (document.body.childElementCount > 0) {
+    document.body.removeChild(document.body.lastChild);
+  }
+}
+
 const createDivStructure = () => {
   const mainScreenDiv = document.createElement("div");
   mainScreenDiv.id = "main-screen";
@@ -50,4 +56,4 @@ const initBattleFrontend = (oceanGrid, targetGrid) => {
   addTargetGridEL();
 };
 
-export { initBattleFrontend };
+export { clearBody, initBattleFrontend };
