@@ -5,7 +5,12 @@ import { createTemplateGrid } from "./grid";
 import { gameRules } from "../logic/gameRules";
 
 import { confirmShipPlacement } from "../controller/handle-place-ships";
-import { getBoard, getCurrBoard, getCurrPlayer, handleNextTurnDuringPlacement } from "../controller/handle-next-turn";
+import {
+  getBoard,
+  getCurrBoard,
+  getCurrPlayer,
+  handleNextTurnDuringPlacement,
+} from "../controller/handle-next-turn";
 
 const createDivSkeleton = () => {
   const setupGameDiv = document.createElement("div");
@@ -107,6 +112,36 @@ const enableNextStepBtn = () => {
   });
 };
 
+const relistenToShipPlacement = (event) => {
+  const formId = event.srcElement.id;
+  let oldForm = document.getElementById(formId);
+  let newForm = oldForm.cloneNode(true);
+  newForm.shipName = oldForm.shipName;
+  newForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleShipPlacementSubmission(event);
+  });
+
+  oldForm.parentNode.replaceChild(newForm, oldForm);
+}
+
+const handleShipPlacementSubmission = (event) => {
+  const placedShip = confirmShipPlacement(event);
+  if (placedShip) {
+    const templateGridDiv = document.getElementById("template-grid-div");
+    const playerBoard = getCurrBoard();
+    createTemplateGrid(templateGridDiv, playerBoard);
+    displayWhichPlayer(templateGridDiv);
+    makeCfmBtnUnusable(event);
+
+    const placedAllShips = checkAllCfmBtnDisabled();
+    if (placedAllShips) enableNextStepBtn();
+  } else {
+    notifyUserOfErrInPlacingShip(event);
+    relistenToShipPlacement(event);
+  }
+};
+
 const createUserInputRow = (shipName, shipLength) => {
   // Name of ship for that row
   const rowName = document.createElement("div");
@@ -119,20 +154,11 @@ const createUserInputRow = (shipName, shipLength) => {
   // Input form for ship's coordinates
   const formDiv = document.createElement("form");
   formDiv.classList.add("form-div");
-  formDiv.id = shipName;
+  formDiv.shipName = shipName;
+  formDiv.id = `${shipName}-form`;
   formDiv.addEventListener("submit", (event) => {
     event.preventDefault();
-    const placedShip = confirmShipPlacement(event);
-    if (placedShip) {
-      const templateGridDiv = document.getElementById("template-grid-div");
-      const playerBoard = getCurrBoard();
-      createTemplateGrid(templateGridDiv, playerBoard);
-      displayWhichPlayer(templateGridDiv);
-      makeCfmBtnUnusable(event);
-
-      const placedAllShips = checkAllCfmBtnDisabled();
-      if (placedAllShips) enableNextStepBtn();
-    } else notifyUserOfErrInPlacingShip(event);
+    handleShipPlacementSubmission(event);
   });
 
   const inputFormUl = document.createElement("ul");

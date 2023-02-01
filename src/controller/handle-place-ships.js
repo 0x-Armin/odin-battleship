@@ -6,11 +6,12 @@ const confirmShipPlacement = (event) => {
   const j = parseInt(event.srcElement[1].value);
   const orientation = event.srcElement[2].value;
 
-  const shipName = event.srcElement.id;
+  const shipName = event.srcElement.shipName;
   const shipLength = gameRules.getShipNameToLength().get(shipName);
   const shipIdx = gameRules.getShipNameToIdx().get(shipName);
 
   const currPlayer = game.getCurrPlayer();
+
   return game.getPlayers()[currPlayer].populateBoard(i, j, shipIdx, orientation, shipLength);
 }
 
