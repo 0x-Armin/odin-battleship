@@ -1,3 +1,63 @@
+@font-face {
+  font-family: 'black_ops_oneregular';
+  src: url('../assets/blackopsone-regular-webfont.woff2') format('woff2'),
+       url('../assets/blackopsone-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: grey;
+  color: white;
+}
+
+body,
+select,
+button {
+  font-family: 'black_ops_oneregular', Arial, Helvetica, sans-serif;
+}
+
+/*
+  PLACE SHIP SCREEN
+*/
+.header {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.instruction {
+  margin-top: 8px;
+  font-size: 20px;
+}
+
+#setup-game-div {
+  margin: auto;
+  width: 90%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#template-grid-div {
+  margin: auto;
+  width: 80%;
+}
+
+.empty-sq {
+  background-color: rgb(3, 3, 53);
+}
+
+.ship-sq {
+  background-color: grey;
+}
+
+/*
+  BATTLE SCREEN
+*/
 #main-screen {
   display: grid;
   grid-template-rows: 1fr 1fr 400px 300px;
@@ -15,7 +75,8 @@
 }
 
 .indicator-sq,
-.empty-sq {
+.empty-sq,
+.ship-sq {
   width: 40px;
   height: 40px;
 
@@ -24,17 +85,21 @@
 }
 
 .indicator-sq, 
-.empty-sq {
+.empty-sq,
+.ship-sq {
   border-style: solid;
   border-width: 0.5px;
 }
 
-.indicator-sq {
-  border-color: rgba(256, 256, 256,0);
-
+.indicator-sq,
+.ship-sq {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.indicator-sq {
+  border-color: rgba(256, 256, 256,0);
 }
 
 .empty-sq {
@@ -65,10 +130,7 @@
   border-width: 0.5px; 
 }
 
-#setup-game-div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+
 
 #user-input-div {
   display: grid;

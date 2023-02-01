@@ -1,3 +1,4 @@
+import "./reset.css";
 import "./style.css";
 import { createTargetGrid, createOceanGrid } from "./grid";
 import { addTargetGridEL } from "./feEventHandler";

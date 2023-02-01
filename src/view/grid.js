@@ -17,8 +17,11 @@ const createTemplateGrid = (container, grid) => {
         infoSq.classList.add('indicator-sq');
         infoSq.innerText = `r${i-1}`;
       } else {
-        infoSq.classList.add('empty-sq');
-        infoSq.innerText = grid.accessBoard(i-1, j-1);
+        const eleAtCell = grid.accessBoard(i-1, j-1);
+        infoSq.innerText = eleAtCell;
+
+        if (eleAtCell === '') infoSq.classList.add('empty-sq');
+        else infoSq.classList.add('ship-sq');
       }
 
       row.appendChild(infoSq);

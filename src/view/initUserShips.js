@@ -1,3 +1,4 @@
+import "./reset.css";
 import "./style.css";
 import { clearBody, initBattleFrontend } from "./initBattleFrontend";
 import { createTemplateGrid } from "./grid";
@@ -93,7 +94,6 @@ const handleShipPlacementSubmission = (event) => {
     const templateGridDiv = document.getElementById("template-grid-div");
     const playerBoard = getCurrBoard();
     createTemplateGrid(templateGridDiv, playerBoard);
-    displayWhichPlayer(templateGridDiv);
     makeCfmBtnUnusable(event);
 
     const placedAllShips = checkAllCfmBtnDisabled();
@@ -270,21 +270,34 @@ const createUserInputForm = (shipsName, shipsLength) => {
   userInputDiv.appendChild(nextStepBtn);
 };
 
-const displayWhichPlayer = (div) => {
-  const whichPlayerDiv = document.createElement("div");
-  whichPlayerDiv.innerText = `Player ${getCurrPlayer()}, please place your ships.`;
+const createHeaderDiv = (div) => {
+  const headerDiv = document.createElement('div');
+  headerDiv.classList.add('header');
 
-  div.insertBefore(whichPlayerDiv, div.firstChild);
-};
+  const titleDiv = document.createElement('div');
+  titleDiv.classList.add('title');
+  titleDiv.innerText = 'Battleship';
+
+  const instructionDiv = document.createElement('div');
+  instructionDiv.classList.add('instruction');
+  instructionDiv.innerText = `Player ${getCurrPlayer()}, please place your ships.`;
+
+  headerDiv.appendChild(titleDiv);
+  headerDiv.appendChild(instructionDiv);
+
+  return headerDiv;
+}
 
 const initUserShips = (player) => {
+  const headerDiv = createHeaderDiv();
+  document.body.appendChild(headerDiv);
+
   const gameSetupDiv = createDivSkeleton();
   document.body.appendChild(gameSetupDiv);
 
   const templateGridDiv = document.getElementById("template-grid-div");
   const playerBoard = getBoard(player);
   createTemplateGrid(templateGridDiv, playerBoard);
-  displayWhichPlayer(templateGridDiv);
 
   const shipsName = gameRules.getShipsName();
   const shipsLength = gameRules.getShipsLength();
