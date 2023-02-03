@@ -3,25 +3,25 @@ import "./style.css";
 import { createTargetGrid, createOceanGrid } from "./grid";
 import { addTargetGridEL } from "./feEventHandler";
 
+import { getCurrPlayer } from "../controller/handle-next-turn";
+
 const clearBody = () => {
   while (document.body.childElementCount > 0) {
     document.body.removeChild(document.body.lastChild);
   }
 }
 
-const createDivStructure = () => {
-  const mainScreenDiv = document.createElement("div");
-  mainScreenDiv.id = "main-screen";
+const createHeaderDiv = () => {
+  const headerDiv = document.createElement('div');
+  headerDiv.classList.add('header');
 
-  const playerNameDiv = document.createElement("div");
-  playerNameDiv.id = 'player-div';
-  playerNameDiv.innerText = "Player 0";
+  const titleDiv = document.createElement('div');
+  titleDiv.classList.add('title');
+  titleDiv.innerText = 'Battleship';
 
-  const infoDiv = document.createElement('div');
-
-  const messageDiv = document.createElement('div');
-  messageDiv.id = 'message-div';
-  messageDiv.innerText = '';
+  const instructionDiv = document.createElement('div');
+  instructionDiv.classList.add('instruction');
+  instructionDiv.innerText = `Player ${getCurrPlayer()}, your turn to attack.`;
 
   const nextTurnBtn = document.createElement('button');
   nextTurnBtn.textContent = 'Next turn';
@@ -29,8 +29,16 @@ const createDivStructure = () => {
   nextTurnBtn.classList.add('not-ready');
   nextTurnBtn.disabled = 'disabled';
 
-  infoDiv.appendChild(messageDiv);
-  infoDiv.appendChild(nextTurnBtn);
+  headerDiv.appendChild(titleDiv);
+  headerDiv.appendChild(instructionDiv);
+  headerDiv.appendChild(nextTurnBtn);
+
+  document.body.appendChild(headerDiv);
+}
+
+const createDivStructure = () => {
+  const mainScreenDiv = document.createElement("div");
+  mainScreenDiv.id = "main-screen";
 
   const targetGridDiv = document.createElement("div");
   targetGridDiv.classList.add("grid");
@@ -40,8 +48,6 @@ const createDivStructure = () => {
   oceanGridDiv.classList.add("grid");
   oceanGridDiv.classList.add("ocean-grid");
 
-  mainScreenDiv.appendChild(playerNameDiv);
-  mainScreenDiv.appendChild(infoDiv);
   mainScreenDiv.appendChild(targetGridDiv);
   mainScreenDiv.appendChild(oceanGridDiv);
 
@@ -51,6 +57,7 @@ const createDivStructure = () => {
 
 
 const initBattleFrontend = (targetGrid, oceanGrid) => {
+  createHeaderDiv();
   createDivStructure();
   createTargetGrid(targetGrid);
   createOceanGrid(oceanGrid);

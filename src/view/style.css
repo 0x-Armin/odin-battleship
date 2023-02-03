@@ -119,50 +119,57 @@ button {
 }
 
 /*
-  BATTLE SCREEN
+  2. BATTLE SCREEN
 */
 #main-screen {
   display: grid;
-  grid-template-rows: 1fr 1fr 400px 300px;
+  grid-template-columns: 1fr 1fr;
 }
 
-.target-grid {
-  flex-grow: 2;
-
+.target-grid,
+.ocean-grid {
   display: flex;
   flex-direction: column;
+
+  margin: auto;
 }
 
 .row {
   display: flex;
 }
 
+.target-grid .hit-square {
+  color: rgb(184, 8, 8);
+}
+
 .indicator-sq {
   border-color: rgba(256, 256, 256,0);
 }
 
-.target-square {
-  width: 35px;
-  height: 35px;
-
-  margin-top: 0.5px;
-  margin-left: 0.5px;
-
-  border-style: solid;
-  border-color: black;
-  border-width: 0.5px;
-}
-
+.target-square,
 .ocean-square {
-  width: 25px;
-  height: 25px;
-
   margin-top: 0.5px;
   margin-left: 0.5px;
 
   border-style: solid;
   border-color: black;
   border-width: 0.5px; 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.target-square {
+  width: 40px;
+  height: 40px;
+
+  background-color: rgb(3, 3, 53);
+}
+
+.ocean-square {
+  width: 35px;
+  height: 35px;
 }
 
 

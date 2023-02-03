@@ -3,17 +3,17 @@ import { game } from "../logic/game";
 import { addTargetGridEL } from "./feEventHandler";
 import { clearGrid, createTargetGrid, createOceanGrid } from "./grid";
 
-import { handleNextTurnInGame } from "../controller/handle-next-turn";
+import { handleNextTurnInGame, getCurrPlayer } from "../controller/handle-next-turn";
 
 const displayDoubleAttackErrMsg = (outcome) => {
-  const msgDiv = document.getElementById("message-div");
+  const instructionDiv = document.querySelector(".instruction");
 
   if (outcome === "AM") {
-    msgDiv.innerText =
-      "You've already missed at this spot! Fire at another spot.";
+    instructionDiv.innerText =
+      `Player ${getCurrPlayer()}. You've already missed at this spot! Fire at another spot.`;
   } else if (outcome === "AH") {
-    msgDiv.innerText =
-      "You've already hit a ship at this spot! Fire at another spot.";
+    instructionDiv.innerText =
+      `Player ${getCurrPlayer()}. You've already hit a ship at this spot! Fire at another spot.`;
   }
 };
 
@@ -40,10 +40,9 @@ const makeNextTurnBtnUnclickable = () => {
 }
 
 const displayWinMessage = () => {
-  const currPlayer = game.getCurrPlayer();
-  const msgDiv = document.getElementById("message-div");
+  const instructionDiv = document.querySelector(".instruction");
 
-  msgDiv.innerText = `Congratulations Player ${currPlayer}! You've won the game! 🔫`;
+  instructionDiv.innerText = `Congratulations Player ${getCurrPlayer()}! You've won the game! 🔫`;
 }
 
 const updateDOMAfterAttack = (outcome) => {
@@ -71,30 +70,31 @@ const clearDisplayedGrids = () => {
 };
 
 const indicateLoading = () => {
-  const msgDiv = document.querySelector("#message-div");
+  const instructionDiv = document.querySelector(".instruction");
   let timeLeft = 3;
 
   let countdownInterval = setInterval(function () {
-    msgDiv.innerText = `Loading next player's screen in ${timeLeft} seconds...`;
+    instructionDiv.innerText = `Loading next player's screen in ${timeLeft} seconds...`;
     timeLeft--;
 
     if (timeLeft === -1) {
-      msgDiv.innerText = "";
+      instructionDiv.innerText = "";
       clearInterval(countdownInterval);
     }
   }, 1000);
 };
 
-const updatePlayerDiv = (currPlayer) => {
-  const playerNameDiv = document.getElementById('player-div');
-  playerNameDiv.innerText = `Player ${currPlayer}`;
+const updateInstructionDiv = (currPlayer) => {
+  const instructionDiv = document.querySelector('.instruction');
+  instructionDiv.innerText = `Player ${currPlayer}, it's your turn to attack.`;
+  console.log('updating instruction div', instructionDiv);
 }
 
 const createScreenForNextPlayer = () => {
   const currPlayer = game.getCurrPlayer();
   const opponent = game.getOpponent();
 
-  updatePlayerDiv(currPlayer);
+  updateInstructionDiv(currPlayer);
 
   createTargetGrid(game.getPlayers()[opponent].getGameBoard());
   createOceanGrid(game.getPlayers()[currPlayer].getGameBoard());
@@ -106,7 +106,7 @@ const updateDOMAfterNextTurn = () => {
   // set a timeout for 3 secs
   indicateLoading();
   // display grids for next player
-  setTimeout(createScreenForNextPlayer, 4000);
+  setTimeout(createScreenForNextPlayer, 4500);
 };
 
 export { updateDOMAfterAttack };

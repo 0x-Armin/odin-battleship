@@ -51,6 +51,8 @@ const createTargetGrid = (grid) => {
       square.innerText = typeof gridElement === "number" ? "" : gridElement;
       square.index = i * 10 + j;
 
+      if (gridElement === 'H') square.classList.add('hit-square');
+
       row.appendChild(square);
     }
     container.appendChild(row);
