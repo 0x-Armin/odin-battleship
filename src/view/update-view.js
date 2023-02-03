@@ -87,7 +87,6 @@ const indicateLoading = () => {
 const updateInstructionDiv = (currPlayer) => {
   const instructionDiv = document.querySelector('.instruction');
   instructionDiv.innerText = `Player ${currPlayer}, it's your turn to attack.`;
-  console.log('updating instruction div', instructionDiv);
 }
 
 const createScreenForNextPlayer = () => {

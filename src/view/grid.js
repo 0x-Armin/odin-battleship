@@ -72,6 +72,7 @@ const createOceanGrid = (grid) => {
       square.classList.add("ocean-square");
       square.innerText = grid.accessBoard(i, j);
 
+      if (grid.accessBoard(i, j) === 'H') square.classList.add('hit-square');
       row.appendChild(square);
     }
     container.appendChild(row);

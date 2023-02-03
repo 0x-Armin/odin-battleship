@@ -126,6 +126,10 @@ button {
   grid-template-columns: 1fr 1fr;
 }
 
+#next-turn-btn {
+  margin-top: 12px;
+}
+
 .target-grid,
 .ocean-grid {
   display: flex;
@@ -138,7 +142,8 @@ button {
   display: flex;
 }
 
-.target-grid .hit-square {
+.target-grid .hit-square,
+.ocean-grid .hit-square {
   color: rgb(184, 8, 8);
 }
 
